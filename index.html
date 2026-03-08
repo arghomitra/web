@@ -500,6 +500,31 @@
   </div>
 </section>
 
+
+  <div id="scroll-arrow" style="
+    position:absolute; bottom:40px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    cursor:pointer; z-index:10;
+  " onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+    <span style="
+      font-family:'JetBrains Mono',monospace; font-size:9px;
+      letter-spacing:3px; text-transform:uppercase; color:var(--muted);
+      animation: fadeUpDown 2s ease-in-out infinite;
+    ">scroll</span>
+    <div style="
+      width:1px; height:40px;
+      background:linear-gradient(to bottom, var(--accent), transparent);
+      animation: fadeUpDown 2s ease-in-out infinite;
+    "></div>
+    <div style="
+      width:20px; height:20px; border-radius:50%;
+      border:1px solid rgba(0,204,255,.4);
+      display:flex; align-items:center; justify-content:center;
+      color:var(--accent); font-size:10px;
+      animation: bounceDown 2s ease-in-out infinite;
+    "><i class="fas fa-chevron-down"></i></div>
+  </div>
+
 <!-- ABOUT -->
 <section id="about">
   <div class="container">
@@ -802,8 +827,8 @@
           </div>
         </div>
         <div class="socials">
-          <a href="#" class="social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" class="social-btn" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://be.linkedin.com/in/argho-mitra" class="social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://github.com/arghomitra" class="social-btn" title="GitHub"><i class="fab fa-github"></i></a>
           <a href="#" class="social-btn" title="Twitter"><i class="fab fa-twitter"></i></a>
         </div>
       </div>
