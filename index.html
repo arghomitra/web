@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -774,16 +776,16 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Name</label>
-            <input class="form-input" type="text" placeholder="Your Name" />
+            <input class="form-input" id="user_name" type="text" placeholder="Your Name" />
           </div>
           <div class="form-group">
             <label class="form-label">Email</label>
-            <input class="form-input" type="email" placeholder="Your Email" />
+            <input class="form-input" id="user_email" type="email" placeholder="Your Email" />
           </div>
         </div>
         <div class="form-group" style="margin-bottom:20px">
           <label class="form-label">Message</label>
-          <textarea class="form-textarea" placeholder="How can I help you today?"></textarea>
+          <textarea class="form-textarea" id="user_message" placeholder="How can I help you today?"></textarea>
         </div>
         <button class="form-submit" id="send-btn">
           Send Message <i class="fas fa-paper-plane"></i>
@@ -804,6 +806,9 @@
 </footer>
 
 <script>
+
+   emailjs.init("5we-bDfDowDSAw0oV");
+
   /* ── Year ── */
   document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -890,14 +895,48 @@
   });
 
   /* ── Send button ── */
-  document.getElementById('send-btn').addEventListener('click', function(){
-    this.innerHTML='<i class="fas fa-check"></i> Message Sent!';
-    this.style.background='linear-gradient(135deg,#1a9e4a,#22cc66)';
-    setTimeout(()=>{
-      this.innerHTML='Send Message <i class="fas fa-paper-plane"></i>';
-      this.style.background='';
-    },3000);
+  
+
+
+  /* ── emailjs service ── */
+  document.getElementById("send-btn").addEventListener("click", function () {
+  const name    = document.getElementById("user_name").value.trim();
+  const email   = document.getElementById("user_email").value.trim();
+  const message = document.getElementById("user_message").value.trim();
+
+  if (!name || !email || !message) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  const btn = document.getElementById("send-btn");
+  btn.innerHTML = "Sending... <i class='fas fa-spinner fa-spin'></i>";
+  btn.disabled = true;
+
+  emailjs.send("service_j755gfb", "template_zmjqczd", {
+    from_name:  name,
+    from_email: email,
+    message:    message,
+  })
+  .then(() => {
+    btn.innerHTML = "<i class='fas fa-check'></i> Message Sent!";
+    btn.style.background = "linear-gradient(135deg,#1a9e4a,#22cc66)";
+    document.getElementById("user_name").value    = "";
+    document.getElementById("user_email").value   = "";
+    document.getElementById("user_message").value = "";
+    setTimeout(() => {
+      btn.innerHTML = "Send Message <i class='fas fa-paper-plane'></i>";
+      btn.style.background = "";
+      btn.disabled = false;
+    }, 3000);
+  })
+  .catch((error) => {
+    console.error(error);
+    btn.innerHTML = "❌ Failed. Try again.";
+    btn.disabled = false;
   });
+});
+  
 </script>
 </body>
 </html>
